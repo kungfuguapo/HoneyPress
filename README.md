@@ -7,11 +7,20 @@ This docker container will build a WordPress environment for you using the follo
 * PHP 5.5
 * Naxsi WAF
 
+### Clone and build docker image
+```
+$ git clone https://github.com/dustyfresh/HoneyPress.git
+$ cd HoneyPress
+$ docker build --rm -t honeypress .
+```
+
+### Start container
 Example:
 ```
 $ ./container-start.sh
 ```
 
+### Logs
 Naxsi Logs:
 ```
 logs/error.log
