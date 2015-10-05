@@ -1,0 +1,24 @@
+#!/bin/bash
+if [[ ! -e /var/.bootstrapped ]]; then
+        /etc/init.d/mysql restart && sleep 3
+	rm /var/www/html/index*
+        mysql -u root -p"wordpress" -e "CREATE DATABASE wordpress;"
+        mysql -u root -p"wordpress" -e "CREATE USER wordpress@localhost IDENTIFIED BY 'wordpress';"
+        mysql -u root -p"wordpress" -e "GRANT ALL PRIVILEGES ON wordpress.* TO wordpress@localhost;"
+        mysql -u root -p"wordpress" -e "FLUSH PRIVILEGES;"
+        wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /tmp/wp
+        chmod +x /tmp/wp
+        mv -v /tmp/wp /usr/local/bin/wp
+        chown -v 0755 /usr/local/bin/wp
+        wp core download --path=/var/www/html --allow-root
+        wp core config --path=/var/www/html --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --allow-root
+        wp core install --path=/var/www/html --url=http://domain.com --title=WordPress --admin_user=admin --admin_email=nobody@nowhere.tld --admin_password=password --allow-root
+        chown -R www-data. /var/www/html
+	/etc/init.d/php5-fpm stop
+	/etc/init.d/nginx stop
+	/etc/init.d/mysql stop
+	touch /var/.bootstrapped
+	/usr/local/bin/supervisord -n
+else
+	/usr/local/bin/supervisord -n
+fi	
