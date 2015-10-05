@@ -7,6 +7,11 @@ This docker container will build a WordPress environment for you using the follo
 * PHP 5.5
 * Naxsi WAF
 
+### Update Naxsi Web App Firewall signatures
+```
+$ git clone https://github.com/nbs-system/naxsi-rules.git
+```
+
 ### Clone and build docker image
 ```
 $ git clone https://github.com/dustyfresh/HoneyPress.git
