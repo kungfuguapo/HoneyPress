@@ -1,6 +1,8 @@
 #!/bin/bash
 if [[ ! -e /var/.bootstrapped ]]; then
+	/etc/init.d/php5-fpm start
         /etc/init.d/mysql restart && sleep 3
+	if [[ ! -e /var/www/html ]]; then echo "Making docroot"; mkdir /var/www/html; fi
 	rm /var/www/html/index*
         mysql -u root -p"wordpress" -e "CREATE DATABASE wordpress;"
         mysql -u root -p"wordpress" -e "CREATE USER wordpress@localhost IDENTIFIED BY 'wordpress';"
@@ -12,7 +14,7 @@ if [[ ! -e /var/.bootstrapped ]]; then
         chown -v 0755 /usr/local/bin/wp
         wp core download --path=/var/www/html --allow-root
         wp core config --path=/var/www/html --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --allow-root
-        wp core install --path=/var/www/html --url=http://domain.com --title=WordPress --admin_user=admin --admin_email=nobody@nowhere.tld --admin_password=password --allow-root
+        wp core install --path=/var/www/html --url=$WP_URL --title=$WP_TITLE --admin_user=admin --admin_email=nobody@nowhere.tld --admin_password=password123 --allow-root
         chown -R www-data. /var/www/html
 	/etc/init.d/php5-fpm stop
 	/etc/init.d/nginx stop

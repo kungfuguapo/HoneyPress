@@ -7,6 +7,12 @@ This docker container will build a WordPress environment for you using the follo
 * PHP 5.5
 * Naxsi WAF
 
+### To Do
+- [ ] Continue writing out trigger.php for malicious entity tracking
+- [ ] Add functionality to pull latest and greatest vulnerable WordPress code to be used in the honeypot
+- [ ] Make code less ugly
+- [ ] Decide on a license
+
 ### Update Naxsi Web App Firewall signatures
 ```
 $ git clone https://github.com/nbs-system/naxsi-rules.git
@@ -16,14 +22,15 @@ $ git clone https://github.com/nbs-system/naxsi-rules.git
 ```
 $ git clone https://github.com/dustyfresh/HoneyPress.git
 $ cd HoneyPress
-$ docker build --rm -t honeypress .
+$ docker build --rm -t HoneyPress .
 ```
 
 ### Start container
 Example:
 ```
-$ ./container-start.sh
+$ docker run --name HoneyPress -d -p 80:80 -v $(pwd)/logs:/var/log/nginx -e "WP_URL=http://domain.com" -e "WP_TITLE='HoneyPress is tasty'" HoneyPress
 ```
+This will start your HoneyPress container. You can see we're specifying the site_url in a docker environment variable at runtime as well as the title.
 
 ### Logs
 Naxsi Logs:
@@ -37,7 +44,7 @@ logs/access.log
 ```
 
 ### WordPress admin credentials
-User: **admin**  
+User: **admin**
 pass: **password**
 
 ### MySQL authentication
@@ -139,3 +146,6 @@ GLOBAL PARAMETERS
 
   Run 'wp help <command>' to get more information on a specific command.
 ```
+
+### Email
+Email has been disabled because if the container is compromised we don't want the bad actors to start sending spam email
