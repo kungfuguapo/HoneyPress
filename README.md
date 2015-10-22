@@ -12,6 +12,7 @@ This docker container will build a WordPress environment for you using the follo
 - [ ] Add functionality to pull latest and greatest vulnerable WordPress code to be used in the honeypot
 - [ ] Make code less ugly
 - [ ] Decide on a license
+- [ ] Add more options to be used via docker environment vars
 
 ### Update Naxsi Web App Firewall signatures
 ```
