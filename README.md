@@ -42,6 +42,11 @@ ADMIN_EMAIL | Admin email address for WordPress to use
 ADMIN_PASSWORD | Secifies the password to assign to the administrator account.
 
 ### Logs
+Logging is handled via a docker volume mount so we may review the HoneyPress logs without entering the container. As specified in the docker run command:
+```
+-v $(pwd)/logs:/var/log
+```
+
 Naxsi Logs:
 ```
 logs/error.log
