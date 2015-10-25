@@ -14,22 +14,18 @@ This docker container will build a WordPress environment for you using the follo
 - [ ] Decide on a license
 - [ ] Add more options to be used via docker environment vars
 
-### Update Naxsi Web App Firewall signatures
-```
-$ git clone https://github.com/nbs-system/naxsi-rules.git
-```
-
 ### Clone and build docker image
+Before we can build the container we need to pull down the doxi-rules repo.
 ```
 $ git clone https://github.com/dustyfresh/HoneyPress.git
 $ cd HoneyPress && git clone https://bitbucket.org/lazy_dogtown/doxi-rules.git
-$ docker build --rm -t HoneyPress .
+$ docker build --rm -t honeypress .
 ```
 
 ### Start container
 Example:
 ```
-$ docker run --name HoneyPress -d -p 80:80 -v $(pwd)/logs:/var/log -e WP_URL='http://blog.atxsec.com' -e WP_TITLE='My blog' -e ADMIN_USER='admin' -e ADMIN_EMAIL='admin@nowhere.tld' -e ADMIN_PASSWORD='password123' HoneyPress
+$ docker run --name HoneyPress -d -p 80:80 -v $(pwd)/logs:/var/log -e WP_URL='http://blog.atxsec.com' -e WP_TITLE='My blog' -e ADMIN_USER='admin' -e ADMIN_EMAIL='admin@nowhere.tld' -e ADMIN_PASSWORD='password123' honeypress
 ```
 This will start your HoneyPress container. You can see we're specifying the site_url in a docker environment variable at runtime as well as the title.
 
