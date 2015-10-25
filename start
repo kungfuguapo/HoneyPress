@@ -1,5 +1,10 @@
 #!/bin/bash
 if [[ ! -e /var/.bootstrapped ]]; then
+	[ -z "$WP_URL" ] && echo "Need to set WP_URL envrionment variable...exiting" && touch /var/.bootstrapped && exit 1
+	[ -z "$WP_TITLE" ] && echo "Need to set WP_TITLE envrionment variable..exiting" && touch /var/.bootstrapped && exit 1
+	[ -z "$ADMIN_USER" ] && echo "Need to set ADMIN_USER envrionment variable..exiting" && touch /var/.bootstrapped && exit 1
+	[ -z "$ADMIN_EMAIL" ] && echo "Need to set ADMIN_EMAIL envrionment variable..exiting" && touch /var/.bootstrapped && exit 1
+	[ -z "$ADMIN_PASSWORD" ] && echo "Need to set ADMIN_PASSWORD envrionment variable..exiting" && touch /var/.bootstrapped && exit 1
 	/etc/init.d/php5-fpm start
         /etc/init.d/mysql restart && sleep 3
 	if [[ ! -e /var/www/html ]]; then echo "Making docroot"; mkdir /var/www/html; fi
@@ -21,6 +26,8 @@ if [[ ! -e /var/.bootstrapped ]]; then
 	/etc/init.d/mysql stop
 	touch /var/.bootstrapped
 	/usr/local/bin/supervisord -n
+	/bootstrap.php
 else
 	/usr/local/bin/supervisord -n
+	/bootstrap.php
 fi	

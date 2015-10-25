@@ -29,7 +29,8 @@ COPY ./naxsi.rules /etc/nginx/naxsi/naxsi.rules
 COPY ./trigger.php /var/www/html/trigger.php
 RUN mkdir -p /var/www/html
 RUN chown -R www-data. /var/www/html
-
+COPY ./bootstrap.php /bootstrap.php
+RUN chmod +x /bootstrap.php
 
 # Supervisor
 RUN apt-get -y install python-setuptools
