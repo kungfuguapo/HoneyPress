@@ -27,7 +27,8 @@ Example:
 ```
 $ docker run --name HoneyPress -d -p 80:80 -v $(pwd)/logs:/var/log -e WP_URL='http://blog.atxsec.com' -e WP_TITLE='My blog' -e ADMIN_USER='admin' -e ADMIN_EMAIL='admin@nowhere.tld' -e ADMIN_PASSWORD='password123' honeypress
 ```
-This will start your HoneyPress container. You can see we're specifying the site_url in a docker environment variable at runtime as well as the title.
+
+This will start your HoneyPress container sharing port 80 (HTTP) with the host. You can see we're specifying parameters for our WordPress installation by using docker environment variables.
 
 ### Container environment variables
 Variable Name  | Description
