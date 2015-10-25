@@ -14,7 +14,7 @@ if [[ ! -e /var/.bootstrapped ]]; then
         chown -v 0755 /usr/local/bin/wp
         wp core download --path=/var/www/html --allow-root
         wp core config --path=/var/www/html --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --allow-root
-        wp core install --path=/var/www/html --url=$WP_URL --title=$WP_TITLE --admin_user=admin --admin_email=nobody@nowhere.tld --admin_password=password123 --allow-root
+        wp core install --path=/var/www/html --url="$WP_URL" --title="$WP_TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_PASSWORD" --allow-root
         chown -R www-data. /var/www/html
 	/etc/init.d/php5-fpm stop
 	/etc/init.d/nginx stop
