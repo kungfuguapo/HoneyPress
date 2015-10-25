@@ -36,7 +36,8 @@ This will start your HoneyPress container. You can see we're specifying the site
 ### Container environment variables
 Variable Name  | Description
 -------------- | -------------
-WP_TITLE  | Title of the blog
+WP_URL | site_url parameter to set in the WordPress database
+WP_TITLE  | Title of the blog to set in the database
 ADMIN_USER | Username to use for the admin account
 ADMIN_EMAIL | Admin email address for WordPress to use
 ADMIN_PASSWORD | Secifies the password to assign to the administrator account.
