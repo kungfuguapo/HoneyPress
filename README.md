@@ -25,7 +25,7 @@ $ docker build --rm -t honeypress .
 ### Start container
 Example:
 ```
-$ docker run --name HoneyPress -d -p 80:80 -v $(pwd)/logs:/var/log -e WP_URL='http://blog.atxsec.com' -e WP_TITLE='My blog' -e ADMIN_USER='admin' -e ADMIN_EMAIL='admin@nowhere.tld' -e ADMIN_PASSWORD='password123' honeypress
+$ docker run --name HoneyPress -d -p 80:80 -v $(pwd)/logs:/var/log/nginx -e WP_URL='http://YourHoneyPotDomain.tld' -e WP_TITLE='Please hack me' -e ADMIN_USER='admin' -e ADMIN_EMAIL='admin@nowhere.tld' -e ADMIN_PASSWORD='password123' honeypress
 ```
 
 This will start your HoneyPress container sharing port 80 (HTTP) with the host. You can see we're specifying parameters for our WordPress installation by using docker environment variables.
@@ -38,6 +38,25 @@ WP_TITLE  | Title of the blog to set in the database
 ADMIN_USER | Username to use for the admin account
 ADMIN_EMAIL | Admin email address for WordPress to use
 ADMIN_PASSWORD | Secifies the password to assign to the administrator account.
+
+### Installing vulnerable plugins and themes with bootstrap script
+Currently the bootstrap.php script that is used to find the latest and greatest vulnerable WordPress code is not fully automated. This is on my to-do list and will be done soon. However, you can run bootstrap.php manually and it will give you a list of wp-cli commands to run in order to bootstrap vulnerable WordPress code:
+```
+root@c837bf806376:/# /bootstrap.php
+Execute the following commands to install vulnerable themes and plugins:
+
+wp --allow-root --path=/var/www/html plugin install cta --version=2.4.3
+wp --allow-root --path=/var/www/html plugin install gwolle-gb --version=1.5.3
+wp --allow-root --path=/var/www/html plugin install events-made-easy --version=1.5.49
+wp --allow-root --path=/var/www/html plugin install wp-piwik --version=1.0.4
+wp --allow-root --path=/var/www/html plugin install font --version=7.5
+wp --allow-root --path=/var/www/html plugin install pie-register --version=2.0.18
+wp --allow-root --path=/var/www/html theme install pagelines --version=1.4.6
+wp --allow-root --path=/var/www/html theme install satoshi --version=2.0
+wp --allow-root --path=/var/www/html plugin install wordpress-seo --version=1.7.3.3
+```
+
+You can see that this script knows the proper version number for the plugin/theme that we hope will get compromised or see scanner activity. Hoping to get more time to touch this once trigger.php gets more love. 
 
 ### Logs
 Logging is handled via a docker volume mount so we may review the HoneyPress logs without entering the container. As specified in the docker run command:
