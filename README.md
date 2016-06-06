@@ -47,10 +47,13 @@ $ docker exec honeypress bash -c 'tail /opt/honeypress/logs/auth.log'
 
 ## ToDo
 - Log shipping (prolly will just use rsyslog / S3)
+- Capture *all* POST/GET payload data into a log to be looked at later by an analyst.
+- Figure out a way to introduce fake **MySQL** for SQLi analysis and payload capture
+- TCP dump analysis
 - Access log monitoring (look for things like sql injections, LFI/RFI, XSS, etc)
 - Modular vulnerabilities. Need to make it easier to fake a new vulnerability so scanners think they're exploiting a live target
 - Tor detection
-- Database of some sort.. haven't decided if I should go with MongoDB or just use sqlite
+- Database of some sort.. haven't decided if I should go with MongoDB or just use sqlite. Not sure about performance yet.
 - Do some benchmarking.. is nginx needed?
 - Some gangster-ish browser fingerprinting (that supports Tor browsers too)
 - SLAP SOME GRAPHS ON THIS SHIT
