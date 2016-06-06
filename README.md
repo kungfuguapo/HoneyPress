@@ -53,3 +53,4 @@ $ docker exec honeypress bash -c 'tail /opt/honeypress/logs/auth.log'
 - Database of some sort.. haven't decided if I should go with MongoDB or just use sqlite
 - Do some benchmarking.. is nginx needed?
 - Some gangster-ish browser fingerprinting (that supports Tor browsers too)
+- SLAP SOME GRAPHS ON THIS SHIT
