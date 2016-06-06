@@ -65,6 +65,7 @@ def wplogin():
         return render_template('wp-login.php'), 200
     return render_template('wp-login.php'), 200
 
+# Reference: https://blog.sucuri.net/2016/06/wp-mobile-detector-vulnerability-being-exploited-in-the-wild.html
 @app.route('/wp-content/plugins/wp-mobile-detector/resize.php', methods=['GET', 'POST'])
 def wpmobiledetector():
     if request.method == 'POST':
