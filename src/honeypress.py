@@ -17,6 +17,27 @@ def logmobiledetector(ip, payload, useragent):
 def index():
     return render_template('index.php'), 200
 
+@app.route('/')
+def searchreplacedb2():
+    return render_template('/searchreplacedb2.php'), 200
+
+# Detecting dirlisting for uploads
+@app.route('/wp-content/uploads/')
+def uploadsdirlisting():
+    return 'index of /', 200
+
+@app.route('/wp-content/debug.log')
+def debuglog():
+    return 'aaa', 200
+
+@app.route('/wp-content/debug.log')
+def debuglog():
+    return 'aaa', 200
+
+@app.route('/wp-admin/admin-ajax.php')
+def adminajaxphp():
+    return '0', 200
+
 @app.route('/xmlrpc.php', methods=['GET', 'POST'])
 def xmlrpc():
     if request.method == 'GET':
@@ -50,6 +71,10 @@ def uploads():
 
 @app.route('/wp-admin')
 def wpadmin():
+    return redirect("/wp-login.php", code=302)
+
+@app.route('/wp-admin/')
+def wpadminslash():
     return redirect("/wp-login.php", code=302)
 
 @app.route('/wp-login.php', methods=['GET', 'POST'])
