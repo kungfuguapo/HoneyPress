@@ -47,6 +47,7 @@ $ docker exec honeypress bash -c 'tail /opt/honeypress/logs/auth.log'
 
 ## ToDo
 - Log shipping (prolly will just use rsyslog / S3)
+- Bake in notifications (SMS & email)
 - Capture *all* POST/GET payload data into a log to be looked at later by an analyst.
 - Figure out a way to introduce fake **MySQL** for SQLi analysis and payload capture
 - TCP dump analysis

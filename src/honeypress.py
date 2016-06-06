@@ -26,7 +26,7 @@ def readme():
 
 @app.route('/wp-config.php')
 def wpconfig():
-    return ''
+    return '', 200
 
 @app.route('/wp-content')
 def wpcontent():
@@ -55,7 +55,7 @@ def wplogin():
         password = request.form['pwd']
         loginattempt(request.remote_addr,username,password,request.headers.get('User-Agent'))
         if username == 'admin' and password == 'admin':
-            return 'username and password are both admin. Likely a bot trying to brute force.'
+            return 'username and password are both admin. Likely a bot trying to use default login details.'
         return render_template('wp-login.php')
     return render_template('wp-login.php')
 
