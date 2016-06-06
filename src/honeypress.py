@@ -9,20 +9,24 @@ def loginattempt(ip,user,passwd,useragent):
     with open("/opt/honeypress/logs/auth.log", "a") as log:
         log.write('[{}] - {} - user: {} pass: {} - {}\n\n\n'.format(str(datetime.now()),ip,user,passwd, useragent))
 
+def logmobiledetector(ip, payload, useragent):
+    with open("/opt/honeypress/logs/mobiledetector.log", "a") as log:
+        log.write('[{}] - {} - {} - Payload:src={}\n'.format(str(datetime.now()), ip, useragent, payload))
+
 @app.route('/')
 def index():
-    return ''
+    return render_template('index.php'), 200
 
 @app.route('/xmlrpc.php', methods=['GET', 'POST'])
 def xmlrpc():
     if request.method == 'GET':
-        return '', 405
+        return 'XML-RPC server accepts POST requests only.', 405
     elif request.method == 'POST':
         return '', 403
 
 @app.route('/readme.html')
 def readme():
-    return render_template('readme.html')
+    return render_template('readme.html'), 200
 
 @app.route('/wp-config.php')
 def wpconfig():
@@ -55,16 +59,25 @@ def wplogin():
         password = request.form['pwd']
         loginattempt(request.remote_addr,username,password,request.headers.get('User-Agent'))
         if username == 'admin' and password == 'admin':
-            return 'username and password are both admin. Likely a bot trying to use default login details.'
-        return render_template('wp-login.php')
-    return render_template('wp-login.php')
+            return 'username and password are both admin. Likely a bot trying to use default login details or brute force.', 200
+        elif username == 'admin' and password == 'password':
+            return 'username and password are admin:password. Likely a bot trying to use default login details or brute force.', 200
+        return render_template('wp-login.php'), 200
+    return render_template('wp-login.php'), 200
+
+@app.route('/wp-content/plugins/wp-mobile-detector/resize.php', methods=['GET', 'POST'])
+def wpmobiledetector():
+    if request.method == 'POST':
+        if request.form['src']:
+            logmobiledetector(request.remote_addr, request.form['src'], request.headers.get('User-Agent'))
+    return '', 200
 
 @app.route('/robots.txt')
 def robots():
     return '''User-agent: *
 Disallow: /wp-admin/
 Allow: /wp-admin/admin-ajax.php
-'''
+''', 200
 
 @app.after_request
 def apply_caching(response):
@@ -77,4 +90,4 @@ def apply_caching(response):
     return response
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=80, debug=True, threaded=True)
