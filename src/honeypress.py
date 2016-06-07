@@ -19,7 +19,7 @@ def index():
 
 @app.route('/searchreplacedb2.php')
 def searchreplacedb2():
-    return render_template('/searchreplacedb2.php'), 200
+    return '', 200
 
 # Detecting dirlisting for uploads
 @app.route('/wp-content/uploads/')
@@ -96,6 +96,10 @@ def wpmobiledetector():
     if request.method == 'POST':
         if request.form['src']:
             logmobiledetector(request.remote_addr, request.form['src'], request.headers.get('User-Agent'))
+    return '', 200
+
+@app.route('/wp-content/plugins/wp-mobile-detector/readme.txt', methods=['GET', 'POST'])
+def wpmobiledetectorreadme():
     return '', 200
 
 
