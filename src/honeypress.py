@@ -17,7 +17,7 @@ def logmobiledetector(ip, payload, useragent):
 def index():
     return render_template('index.php'), 200
 
-@app.route('/')
+@app.route('/searchreplacedb2.php')
 def searchreplacedb2():
     return render_template('/searchreplacedb2.php'), 200
 
@@ -25,10 +25,6 @@ def searchreplacedb2():
 @app.route('/wp-content/uploads/')
 def uploadsdirlisting():
     return 'index of /', 200
-
-@app.route('/wp-content/debug.log')
-def debuglog():
-    return 'aaa', 200
 
 @app.route('/wp-content/debug.log')
 def debuglog():
@@ -91,12 +87,17 @@ def wplogin():
     return render_template('wp-login.php'), 200
 
 # Reference: https://blog.sucuri.net/2016/06/wp-mobile-detector-vulnerability-being-exploited-in-the-wild.html
+@app.route('/wp-content/plugins/wp-mobile-detector/', methods=['GET', 'POST'])
+def wpmobiledetectorslash():
+    return '', 200
+
 @app.route('/wp-content/plugins/wp-mobile-detector/resize.php', methods=['GET', 'POST'])
 def wpmobiledetector():
     if request.method == 'POST':
         if request.form['src']:
             logmobiledetector(request.remote_addr, request.form['src'], request.headers.get('User-Agent'))
     return '', 200
+
 
 @app.route('/robots.txt')
 def robots():
